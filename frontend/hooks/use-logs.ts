@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { StatusResponse } from "@/lib/api";
+import { StatusResponse, API_URL } from "@/lib/api";
 
 export interface LogEntry {
     timestamp: string;
@@ -18,7 +18,9 @@ export function useLogs() {
         let mounted = true;
 
         const connect = () => {
-            const socket = new WebSocket('ws://localhost:8000/ws/logs');
+            // Convert HTTP URL to WebSocket URL (http -> ws, https -> wss)
+            const wsUrl = API_URL.replace(/^http/, 'ws') + '/ws/logs';
+            const socket = new WebSocket(wsUrl);
 
             socket.onopen = () => {
                 if (mounted) setIsConnected(true);
