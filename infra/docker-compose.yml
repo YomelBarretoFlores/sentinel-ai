@@ -1,0 +1,30 @@
+services:
+  victim:
+    build:
+      context: .
+      dockerfile: Dockerfile.victim
+    container_name: sentinel-victim
+    ports:
+      - "2222:22"   # SSH Access
+      - "8080:80"   # HTTP Access (Nginx)
+    volumes:
+      - ./logs:/var/log/nginx
+    environment:
+      - SSH_USER=sentinel
+      - SSH_PASS=securepassword123
+    restart: always
+
+  db:
+      image: postgres:15
+      container_name: sentinel-db
+      environment:
+        POSTGRES_USER: sentinel
+        POSTGRES_PASSWORD: sentinel_password
+        POSTGRES_DB: sentinel_logs
+      ports:
+        - "5432:5432"
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

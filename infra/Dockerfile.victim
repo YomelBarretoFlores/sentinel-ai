@@ -1,0 +1,23 @@
+FROM ubuntu:22.04
+
+# Install basic packages
+RUN apt-get update && apt-get install -y \
+    nginx \
+    openssh-server \
+    sudo \
+    curl \
+    vim \
+    && rm -rf /var/lib/apt/lists/*
+
+# Configure SSH
+RUN mkdir /var/run/sshd
+RUN useradd -m -s /bin/bash sentinel && \
+    echo 'sentinel:securepassword123' | chpasswd && \
+    adduser sentinel sudo
+
+# Allow password authentication (for demo purposes)
+RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# Start Nginx and SSH
+CMD service nginx start && /usr/sbin/sshd -D
