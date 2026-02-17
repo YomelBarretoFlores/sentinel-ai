@@ -243,8 +243,14 @@ class VectorKnowledgeBase:
 
 
 
-try:
-    kb = VectorKnowledgeBase()
-except Exception as e:
-    print(f"[ADVERTENCIA] No se pudo inicializar la base de conocimiento: {e}")
-    kb = None
+# Global verification instance
+kb = None
+
+def init_knowledge_base():
+    global kb
+    try:
+        kb = VectorKnowledgeBase()
+        log("system", "Base de conocimiento inicializada correctamente.")
+    except Exception as e:
+        log("error", f"No se pudo inicializar la base de conocimiento: {e}")
+        kb = None

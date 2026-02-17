@@ -6,7 +6,7 @@ import asyncio
 
 from ..core.config import config
 from ..core.memory import memory
-from ..core.knowledge import kb
+from ..core import knowledge
 from ..tools.ssh import SSHClient
 from ..core.event_bus import bus, log
 from ..agent.graph import app as agent_graph
@@ -233,12 +233,13 @@ import json
 
 @router.post("/chat")
 def chat(request: ChatRequest):
-    if not kb:
-        raise HTTPException(status_code=503, detail="Knowledge base not available")
+    if not knowledge.kb:
+        # Si aun esta cargando, intentamos inicializarlo al vuelo (opcional pero lento)
+        raise HTTPException(status_code=503, detail="Knowledge base is initializing. Please try again in a few seconds.")
     
     def event_stream():
         try:
-            for event in kb.stream_query(request.query):
+            for event in knowledge.kb.stream_query(request.query):
                 yield f"event: {event['event']}\ndata: {json.dumps(event['data'])}\n\n"
         except Exception as e:
             error_data = json.dumps({"error": str(e)})

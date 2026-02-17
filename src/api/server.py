@@ -4,12 +4,18 @@ from contextlib import asynccontextmanager
 from .routes import router
 from .state import AGENT_STATE
 from ..core.event_bus import log
+from ..core.knowledge import init_knowledge_base
+import threading
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup
     log("system", "Sentinel AI Iniciado (Modo API) 🚀")
+    
+    # Iniciar la carga de modelos en segundo plano para no bloquear el puerto
+    threading.Thread(target=init_knowledge_base, daemon=True).start()
+    
     yield
     # Shutdown
     log("system", "Apagando Sentinel AI...")
