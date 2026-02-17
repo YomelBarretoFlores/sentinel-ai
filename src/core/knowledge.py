@@ -4,9 +4,10 @@ from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, StorageCon
 from llama_index.vector_stores.pinecone import PineconeVectorStore
 from llama_index.embeddings.openai import OpenAIEmbedding
 from llama_index.llms.openai import OpenAI
-from llama_index.postprocessor.sbert_rerank import SentenceTransformerRerank
+from llama_index.postprocessor.cohere_rerank import CohereRerank
 from llama_parse import LlamaParse
 from src.core.config import config
+from src.core.event_bus import log
 
 
 class VectorKnowledgeBase:
@@ -17,9 +18,9 @@ class VectorKnowledgeBase:
         self.vector_store = PineconeVectorStore(pinecone_index=self.pc.Index(self.index_name))
         self.embed_model = OpenAIEmbedding(model=config.EMBEDDING_MODEL)
         self.llm = OpenAI(model=config.MODEL_NAME, temperature=config.TEMPERATURE)
-        self.reranker = SentenceTransformerRerank(
-            model="cross-encoder/ms-marco-MiniLM-L-12-v2",
-            top_n=8
+        self.reranker = CohereRerank(
+            api_key=config.COHERE_API_KEY,
+            top_n=5
         )
         self.index = None
 

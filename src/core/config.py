@@ -19,11 +19,13 @@ class Config:
     EMBED_MODEL = "text-embedding-3-small"
     EMBEDDING_MODEL = EMBED_MODEL
     EMBEDDING_DIM = 1536
+    
+    COHERE_API_KEY = os.getenv("COHERE_API_KEY")  # Configurar en Render/Vercel
 
     SSH_HOST = os.getenv("SSH_HOST", "localhost")
     SSH_PORT = int(os.getenv("SSH_PORT", 2222))
     SSH_USER = os.getenv("SSH_USER", "sentinel")
-    SSH_PASS = os.getenv("SSH_PASS", "securepassword123")
+    SSH_PASS = os.getenv("SSH_PASS")
 
     DATA_DIR = "data"
     MANUALS_DIR = os.path.join(DATA_DIR, "manuals")
