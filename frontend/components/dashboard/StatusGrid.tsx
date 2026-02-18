@@ -1,5 +1,5 @@
 import { StatusResponse } from "@/lib/api";
-import { CheckCircle2, XCircle, Clock, Globe } from "lucide-react";
+import { CheckCircle2, XCircle, Clock, Globe, Database, Terminal } from "lucide-react";
 
 interface StatusGridProps {
     services: StatusResponse | null;
@@ -43,13 +43,11 @@ export function StatusGrid({ services }: StatusGridProps) {
                         <h3 className="font-semibold text-sm capitalize">{name}</h3>
                         <div className={`p-1.5 rounded-full ${service.status === 'running' ? 'bg-blue-500/10' : 'bg-red-500/10'}`}>
                             {service.type === 'database' ? (
-                                <span className="text-lg">db</span>
+                                <Database className="w-4 h-4 text-purple-500" />
+                            ) : service.type === 'web_server' ? (
+                                <Globe className="w-4 h-4 text-blue-500" />
                             ) : (
-                                service.type === 'web_server' ? (
-                                    <Globe className="w-4 h-4 text-blue-500" />
-                                ) : (
-                                    <span className="text-lg">sys</span>
-                                )
+                                <Terminal className="w-4 h-4 text-orange-500" />
                             )}
                         </div>
                     </div>

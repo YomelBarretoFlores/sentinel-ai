@@ -1,6 +1,6 @@
-# Global state for the agent
 AGENT_STATE = {
-    "status": "idle",  # idle, running, completed, error
+    "status": "idle",
+
     "last_run": None,
     "current_step": None,
     "current_step": None,

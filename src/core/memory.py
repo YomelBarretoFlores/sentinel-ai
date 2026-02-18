@@ -61,10 +61,10 @@ class AgentMemory:
 
         for ep in self.episodes:
             if not ep["success"]:
-                # If error is somewhat similar (simple keyword overlap)
+
                 ep_keywords = set(ep.get("error", "").lower().split())
                 if len(error_keywords & ep_keywords) >= 1:
-                    # Clean up command to avoid duplicates
+
                     cmd = ep["command"].strip()
                     failed.add(cmd)
 

@@ -22,7 +22,7 @@ class EventBus:
             "message": message,
             "details": details or {}
         }
-        # Iterate over a copy to avoid modification during iteration issues
+
         for queue in list(self._queues):
             try:
                 queue.put_nowait(payload)

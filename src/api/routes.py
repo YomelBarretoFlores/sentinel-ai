@@ -234,7 +234,6 @@ import json
 @router.post("/chat")
 def chat(request: ChatRequest):
     if not knowledge.kb:
-        # Si aun esta cargando, intentamos inicializarlo al vuelo (opcional pero lento)
         raise HTTPException(status_code=503, detail="Knowledge base is initializing. Please try again in a few seconds.")
     
     def event_stream():

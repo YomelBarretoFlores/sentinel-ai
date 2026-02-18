@@ -6,6 +6,7 @@ import { StatusGrid } from "@/components/dashboard/StatusGrid";
 import { Terminal } from "@/components/dashboard/Terminal";
 import { ChatPanel } from "@/components/dashboard/ChatPanel";
 import { ActionHistory } from "@/components/dashboard/ActionHistory";
+import { KnowledgePanel } from "@/components/dashboard/KnowledgePanel";
 import { useLogs } from "@/hooks/use-logs";
 import { api, StatusResponse } from "@/lib/api";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -70,6 +71,9 @@ export default function Home() {
                 <TabsTrigger value="history" className="data-[state=active]:bg-background">
                   Action History
                 </TabsTrigger>
+                <TabsTrigger value="knowledge" className="data-[state=active]:bg-background">
+                  Knowledge Base
+                </TabsTrigger>
               </TabsList>
             </div>
 
@@ -79,6 +83,10 @@ export default function Home() {
 
             <TabsContent value="history" className="mt-0 flex-1">
               <ActionHistory logs={logs} />
+            </TabsContent>
+
+            <TabsContent value="knowledge" className="mt-0 flex-1">
+              <KnowledgePanel />
             </TabsContent>
           </Tabs>
         </div>

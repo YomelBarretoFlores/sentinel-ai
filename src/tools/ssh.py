@@ -47,7 +47,7 @@ class SSHClient:
             print(f"[SSH] Ejecutando: {command}")
             stdin, stdout, stderr = self.client.exec_command(command)
 
-        # Poll for completion to allow interruption
+
         while not stdout.channel.exit_status_ready():
             try:
                 check_stop()
@@ -63,7 +63,7 @@ class SSHClient:
             out = stdout.read().decode().strip()
             err = stderr.read().decode().strip()
         except Exception:
-            # If closed during read
+
             out = ""
             err = "Interrupted"
 
@@ -73,22 +73,6 @@ class SSHClient:
 
         return exit_code, out, err
 
-    def execute_commands(self, commands: List[str], use_sudo: bool = False) -> Tuple[int, str, str]:
-        all_out = []
-        all_err = []
-        last_code = 0
-
-        for cmd in commands:
-            code, out, err = self.execute_command(cmd.strip(), use_sudo=use_sudo)
-            all_out.append(f"$ {cmd}\n{out}" if out else f"$ {cmd}")
-            if err:
-                all_err.append(err)
-            last_code = code
-            if code != 0:
-                print(f"[SSH] Comando fallo con codigo {code}: {cmd}")
-                break
-
-        return last_code, "\n".join(all_out), "\n".join(all_err)
 
     def close(self):
         if self.client:

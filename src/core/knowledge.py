@@ -161,11 +161,7 @@ class VectorKnowledgeBase:
         sources = []
         for node in reranked_nodes:
             file_name = node.metadata.get("file_name", "Archivo desconocido")
-            page = node.metadata.get("page_label", None)
-            if page and page != "N/A":
-                sources.append(f"{file_name} (Pag. {page})")
-            else:
-                sources.append(f"{file_name}")
+            sources.append(file_name)
 
         if sources:
             unique_sources = list(set(sources))
@@ -229,11 +225,7 @@ class VectorKnowledgeBase:
         sources = []
         for node in reranked_nodes:
             file_name = node.metadata.get("file_name", "Archivo desconocido")
-            page = node.metadata.get("page_label", None)
-            if page and page != "N/A":
-                sources.append(f"{file_name} (Pag. {page})")
-            else:
-                sources.append(f"{file_name}")
+            sources.append(file_name)
 
         if sources:
             unique_sources = list(set(sources))
@@ -244,7 +236,7 @@ class VectorKnowledgeBase:
 
 
 
-# Global verification instance
+
 kb = None
 
 def init_knowledge_base():

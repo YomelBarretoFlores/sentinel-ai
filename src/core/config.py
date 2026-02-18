@@ -20,7 +20,7 @@ class Config:
     EMBEDDING_MODEL = EMBED_MODEL
     EMBEDDING_DIM = 1536
     
-    COHERE_API_KEY = os.getenv("COHERE_API_KEY")  # Configurar en Render/Vercel
+    COHERE_API_KEY = os.getenv("COHERE_API_KEY")
 
     SSH_HOST = os.getenv("SSH_HOST", "localhost")
     SSH_PORT = int(os.getenv("SSH_PORT", 2222))
@@ -35,7 +35,7 @@ class Config:
     MONITOR_INTERVAL = 30
     MAX_RETRIES = 5
     
-    # Default Services
+
     DEFAULT_SERVICES = {
         "nginx": {
             "check_command": "service nginx status",
